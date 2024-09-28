@@ -1,0 +1,30 @@
+public:
+	//RECURSION CODE - call by value
+    void permute(string ip,string op,vector<string>&v){
+	        if(ip.size()==0){
+	            v.push_back(op);
+	            return;
+	        }
+	        int n=ip.size();
+	        unordered_set<char>mp;
+	        for(int i=0;i<n;i++){
+	           if(mp.find(ip[i])==mp.end()){
+	            mp.insert(ip[i]);
+	            string new_ip=ip.substr(0,i)+ip.substr(i+1);
+	            string new_op=op+ip[i];
+	            permute(new_ip,new_op,v);
+	           }
+	        }
+	  }
+   
+   //BACKTRACKING CODE - call by reference
+
+    
+		vector<string>find_permutation(string S)
+		{
+		    // Code here there
+		    vector<string>v;
+		    string str="";
+		    permute(S,str,v);
+		    return v;
+		}
