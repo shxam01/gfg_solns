@@ -1,0 +1,44 @@
+struct Choice{
+    char dname;
+    int dx,dy;
+};
+
+bool isValid(int x ,int y, vector<vector<int>>&mat){
+    int n=mat.size();
+    int m=mat[0].size();
+    return x>=0 && x<n && y>=0 && y<m && mat[x][y]==1;
+}
+
+
+void solve(int x,int y,vector<vector<int>>&mat,string &path,vector<string>&res,vector<Choice>&choices){
+    int n=mat.size();
+    if(x==n-1 && y==n-1){
+        res.push_back(path);
+        return;
+    }
+    
+    for(auto choice:choices){
+        int newx=x+choice.dx;
+        int newy=y+choice.dy;
+        if(isValid(newx,newy,mat)){
+            mat[x][y]=0;
+            path.push_back(choice.dname);
+            solve(newx,newy,mat,path,res,choices);
+            mat[x][y]=1;
+            path.pop_back();
+        }
+    }
+}
+class Solution {
+  public:
+    vector<string> findPath(vector<vector<int>> &mat) {
+        // Your code goes here
+        vector<string>res;
+        string path="";
+        vector<Choice>choices={{'U',-1,0},{'D',1,0},{'L',0,-1},{'R',0,1}};
+        if(mat[0][0]==1){
+        solve(0,0,mat,path,res,choices);
+        }
+        return res;
+    }
+};
